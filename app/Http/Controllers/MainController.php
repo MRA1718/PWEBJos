@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Wallet;
 use App\Income;
+use App\Expense;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Response;
@@ -59,15 +60,8 @@ class MainController extends Controller
     }
 
     public function addPost(Request $request){
-          $coba = array(
-            'nama_pem' => $request->nama_pem,
-            'jmlh' =>  $request->jmlh,
-            'tgl' =>  $request->tgl,
-          );
 
-
-
-            $id=wallet::where('id_user',Auth::user()->id)->first();
+          $id=wallet::where('id_user',Auth::user()->id)->first();
 
           $hasil=$id['uang'] + $request->jmlh;
 
@@ -80,15 +74,14 @@ class MainController extends Controller
           ];
           $wallet->update($data);
 
-
           $income = new income;
           $income->id_user =  Auth::user()->id;
           $income->nama_pemasukan = $request->nama_pem;
           $income->biaya_pemasukan = $request->jmlh;
           $income->tgl_pemasukan = $request->tgl;
           $income->save();
-            $incomes =income::where('id_user',Auth::user()->id)->get();
-           return view('pages.income',compact('wallet','incomes'));
+          $incomes =income::where('id_user',Auth::user()->id)->get();
+         return view('pages.income',compact('wallet','incomes'));
 
     }
 
@@ -121,6 +114,42 @@ class MainController extends Controller
 
     }
 
+    public function expense()
+    {
+        $wallet=wallet::where('id_user',Auth::user()->id)->first();
+
+        $expenses =expense::where('id_user',Auth::user()->id)->get();
+
+
+       return view('pages.expense',compact('wallet','expenses'));
+    }
+
+
+    public function addExp(Request $request){
+
+          $id=wallet::where('id_user',Auth::user()->id)->first();
+
+          $hasil=$id['uang'] - $request->jmlh;
+
+          // $id =$request->input('post_id');
+          //$post=Post::where('id', $id)->first();
+          $wallet = wallet::find(Auth::user()->id);
+          $data =[
+            'uang' => $hasil
+
+          ];
+          $wallet->update($data);
+
+          $expense = new expense;
+          $expense->id_user =  Auth::user()->id;
+          $expense->nama_pengeluaran = $request->nama_peng;
+          $expense->biaya_pengeluaran = $request->jmlh;
+          $expense->tgl_pengeluaran = $request->tgl;
+          $expense->save();
+          $expenses =expense::where('id_user',Auth::user()->id)->get();
+         return view('pages.expense',compact('wallet','expenses'));
+
+    }
 
 
 }

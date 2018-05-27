@@ -7,24 +7,24 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="#">Pemasukan</a>
+        <a href="#">Pengeluaran</a>
       </li>
-      <li class="breadcrumb-item active">Pemasukanmu</li>
+      <li class="breadcrumb-item active">Pengeluaranmu</li>
     </ol>
     <h1> Uangmu = RP. <?php echo number_format($wallet['uang'],0,",","."); ?>  </h1>
 
 
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-table"></i> Data Table Example</div>
+        <i class="fa fa-table"></i> Tabel Pengeluaran</div>
       <div class="card-body">
         <div class="table table-responsive">
     <table class="table table-bordered" id="table">
       <tr>
         <th width="150px">No</th>
-        <th>Nama Pemasukan</th>
-        <th>Biaya Pemasukan</th>
-        <th>Tanggal Pemasukan</th>
+        <th>Nama Pengeluaran</th>
+        <th>Biaya Pengeluaran</th>
+        <th>Tanggal Pengeluaran</th>
         <th class="text-center" width="150px">
           <a href="#" class="create-modal btn btn-success btn-sm">
             <i class="fa fa-plus"></i>
@@ -33,12 +33,12 @@
       </tr>
 
        <?php  $no=1; ?>
-         @foreach ($incomes as $value)
+         @foreach ($expenses as $value)
         <tr class="post{{$value->id}}">
           <td>{{ $no++ }}</td>
-          <td>{{ $value->nama_pemasukan }}</td>
-          <td>Rp. <?php echo number_format($value->biaya_pemasukan ,0,",","."); ?> </td>
-          <td>{{ $value->tgl_pemasukan }}</td>
+          <td>{{ $value->nama_pengeluaran }}</td>
+          <td>Rp. <?php echo number_format($value->biaya_pengeluaran ,0,",","."); ?> </td>
+          <td>{{ $value->tgl_pengeluaran }}</td>
           <td>
             <center>
             <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="" data-title="" data-body="">
@@ -64,19 +64,19 @@
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="form" action="/income/addPost" method="post">
+        <form class="form-horizontal" role="form" action="/expense/addExp" method="post">
             @csrf
 
           <div class="form-group row add">
-            <label class="control-label col-sm-5" for="nama_pem">Nama Pemasukan :</label>
+            <label class="control-label col-sm-5" for="nama_peng">Nama Pengeluaran :</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nama_pem" name="nama_pem"
+              <input type="text" class="form-control" id="nama_peng" name="nama_peng"
               placeholder="Enter " required>
               <p class="error text-center alert alert-danger hidden"></p>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-5" for="body">Jumlah Pemasukan :</label>
+            <label class="control-label col-sm-5" for="body">Jumlah Pengeluaran :</label>
             <div class="col-sm-10">
               <input type="number" class="form-control" id="jmlh" name="jmlh"
               placeholder="Enter" required>
@@ -84,7 +84,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-5" for="tgl">Tanggal Pemasukan :</label>
+            <label class="control-label col-sm-5" for="tgl">Tanggal Pengeluaran :</label>
             <div class="col-sm-10">
               <input type="date" class="form-control" id="tgl" name="tgl"
               placeholder="Enter" required>
@@ -160,12 +160,12 @@
     </div>
   </div>
 </div>
-      
+
 @endsection
 
 @section('add_js')
 <script src="//code.jquery.com/jquery-1.12.3.js"></script>
-<script src="/assets/js/modal.js"></script>
+<script src="/assets/js/modal2.js"></script>
 <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 {{-- <script  src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script> --}}
 {{-- <link rel="stylesheet"  href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.8/css/bootstrap.min.css"> --}}

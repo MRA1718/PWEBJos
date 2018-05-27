@@ -25,3 +25,6 @@ Route::get('/income','MainController@income')->name('income') ;
 Route::post('/income/addPost','MainController@addPost');
 
 Route::post('/income/del_income','MainController@del_income');
+
+Route::get('/expense','MainController@expense')->name('expense') ;
+Route::post('/expense/addExp','MainController@addExp');

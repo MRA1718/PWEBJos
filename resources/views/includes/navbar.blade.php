@@ -13,7 +13,7 @@
       </li>
 
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="/expense">
           <i class="fa fa-fw fa-area-chart"></i>
           <span class="nav-link-text">Pengeluaran</span>
         </a>
