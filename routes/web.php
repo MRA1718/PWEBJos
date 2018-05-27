@@ -23,3 +23,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home/money','MainController@store_money') ;
 Route::get('/income','MainController@income')->name('income') ;
 Route::post('/income/addPost','MainController@addPost');
+
+Route::post('/income/del_income','MainController@del_income');

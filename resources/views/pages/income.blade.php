@@ -7,9 +7,9 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="#">Home page</a>
+        <a href="#">Pemasukan</a>
       </li>
-      <li class="breadcrumb-item active">My Home Page</li>
+      <li class="breadcrumb-item active">Pemasukanmu</li>
     </ol>
     <h1> Uangmu = RP. {{$wallet['uang']}} </h1>
 
@@ -27,7 +27,7 @@
         <th>Tanggal Pemasukan</th>
         <th class="text-center" width="150px">
           <a href="#" class="create-modal btn btn-success btn-sm">
-            <i class="glyphicon glyphicon-plus"></i>
+            <i class="fa fa-plus"></i>
           </a>
         </th>
       </tr>
@@ -36,17 +36,17 @@
         <tr class="post{{$value->id}}">
           <td>{{ $no++ }}</td>
           <td>{{ $value->nama_pemasukan }}</td>
-          <td>{{ $value->biaya_pemasukan }}</td>
+          <td>Rp. {{ $value->biaya_pemasukan }}</td>
           <td>{{ $value->tgl_pemasukan }}</td>
           <td>
-            <a href="#" class="show-modal btn btn-info btn-sm" data-id="" data-title="" data-body="">
+            <a href="#" class="show-modal btn btn-info btn-sm" data-id="{{$value->id}}" data-title="" data-body="">
               <i class="fa fa-eye"></i>
             </a>
             <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="" data-title="" data-body="">
-              <i class="glyphicon glyphicon-pencil"></i>
+              <i class="fa fa-pencil"></i>
             </a>
-            <a href="#" class="delete-modal btn btn-danger btn-sm" data-id="" data-title="" data-body="">
-              <i class="glyphicon glyphicon-trash"></i>
+            <a href="#" class="delete-modal btn btn-danger btn-sm" data-id="{{$value->id}}" data-title="" data-body="">
+            <i class="fa fa-trash-o"></i>
             </a>
           </td>
         </tr>
@@ -166,9 +166,17 @@
         </div>
       </div>
       <div class="modal-footer">
+        {{-- <form action="/income/del_income">
+          <input type="hidden" name="id" value="{{$value->id}}">
+          <button class="btn btn-danger" type="submit" >
+            Delete
+          </button>
+
+
+        </form> --}}
         <button type="button" class="btn actionBtn" data-dismiss="modal">
-          <span id="footer_action_button" class="glyphicon"></span>
-        </button>
+         <span id="footer_action_button" class="glyphicon"></span>
+       </button>
         <button type="button" class="btn btn-warning" data-dismiss="modal">
           <span class="glyphicon glyphicon"></span>close
         </button>
@@ -185,12 +193,12 @@
 <script src="//code.jquery.com/jquery-1.12.3.js"></script>
 <script src="/assets/js/modal.js"></script>
 <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script  src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-<link rel="stylesheet"  href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet"  href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+{{-- <script  src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script> --}}
+{{-- <link rel="stylesheet"  href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.8/css/bootstrap.min.css"> --}}
+{{-- <link rel="stylesheet"  href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css"> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
       {{-- <script>
           $(document).ready(function(){

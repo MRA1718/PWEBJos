@@ -59,22 +59,27 @@ class MainController extends Controller
     }
 
     public function addPost(Request $request){
-          $rules = array(
-            'nama_pem' => 'required',
-            'jmlh' => 'required',
-            'tgl' => 'required',
-          );
           $coba = array(
             'nama_pem' => $request->nama_pem,
             'jmlh' =>  $request->jmlh,
             'tgl' =>  $request->tgl,
           );
 
-          $wallet = new wallet;
 
-          $wallet=wallet::where('id_user',Auth::user()->id)->first();
 
-          $hasil=$wallet['uang'] + $request->jmlh;
+            $id=wallet::where('id_user',Auth::user()->id)->first();
+
+          $hasil=$id['uang'] + $request->jmlh;
+
+          $id =$request->input('post_id');
+          //$post=Post::where('id', $id)->first();
+          $wallet = wallet::find(Auth::user()->id);
+          $data =[
+            'uang' => $hasil
+
+          ];
+          $wallet->update($data);
+
 
           $income = new income;
           $income->id_user =  Auth::user()->id;
@@ -88,12 +93,34 @@ class MainController extends Controller
     }
 
     public function editPost(request $request){
+
       $post = Post::find ($request->id);
       $post->title = $request->title;
       $post->body = $request->body;
       $post->save();
       return response()->json($post);
     }
+
+
+    public function del_income(request $request){
+      $income = Income::find ($request->id)->delete();
+      $id_wallet=Wallet::where('id_user',Auth::user()->id)->first();
+      $id_income=Income::where('id',$request->id);
+      $hasil=$id['uang'] - $id_income['biaya_pemasukan'];
+      // return view('pages.income');
+
+      $data =[
+        'uang' => $hasil
+
+      ];
+      $wallet->update($data);
+
+
+
+      // return response()->json($income);
+
+    }
+
 
 
 }

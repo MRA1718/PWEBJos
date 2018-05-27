@@ -6,38 +6,38 @@
     $('.modal-title').text('Add Post');
   });
 
-  $("#add").click(function() {
-    $.ajax({
-      type: 'POST',
-      url: 'addPost',
-      data: {
-        '_token': $('input[name=_token]').val(),
-        'nama_pem': $('input[name=nama_pem]').val(),
-        'jmlh': $('input[name=jmlh]').val(),
-        'tgl': $('input[name=tgl]').val()
-      },
-      success: function(data){
-        if ((data.errors)) {
-          $('.error').removeClass('hidden');
-          $('.error').text(data.errors.title);
-          $('.error').text(data.errors.body);
-        } else {
-          $('.error').remove();
-          $('#table').append("<tr class='post" + data.id + "'>"+
-          "<td>" + data.nama_pem + "</td>"+
-          "<td>" + data.jmlh + "</td>"+
-          "<td>" + data.tgl + "</td>"+
-          //
-          // "<td><button class='show-modal btn btn-info btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='fa fa-eye'></span></button> <button class='edit-modal btn btn-warning btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-pencil'></span></button> <button class='delete-modal btn btn-danger btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-trash'></span></button></td>"+
-          "</tr>");
-        }
-      },
-    });
-    $('#nama_pemasukan').val('');
-    $('#jmlh').val('');
-    $('#tgl').val('');
-    // console.log(10);
-  });
+  // $("#add").click(function() {
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: 'addPost',
+  //     data: {
+  //       '_token': $('input[name=_token]').val(),
+  //       'nama_pem': $('input[name=nama_pem]').val(),
+  //       'jmlh': $('input[name=jmlh]').val(),
+  //       'tgl': $('input[name=tgl]').val()
+  //     },
+  //     success: function(data){
+  //       if ((data.errors)) {
+  //         $('.error').removeClass('hidden');
+  //         $('.error').text(data.errors.title);
+  //         $('.error').text(data.errors.body);
+  //       } else {
+  //         $('.error').remove();
+  //         $('#table').append("<tr class='post" + data.id + "'>"+
+  //         "<td>" + data.nama_pem + "</td>"+
+  //         "<td>" + data.jmlh + "</td>"+
+  //         "<td>" + data.tgl + "</td>"+
+  //         //
+  //         // "<td><button class='show-modal btn btn-info btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='fa fa-eye'></span></button> <button class='edit-modal btn btn-warning btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-pencil'></span></button> <button class='delete-modal btn btn-danger btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-trash'></span></button></td>"+
+  //         "</tr>");
+  //       }
+  //     },
+  //   });
+  //   $('#nama_pemasukan').val('');
+  //   $('#jmlh').val('');
+  //   $('#tgl').val('');
+  //   // console.log(10);
+  // });
 
 // function Edit POST
 $(document).on('click', '.edit-modal', function() {
@@ -87,24 +87,24 @@ $('#footer_action_button').addClass('glyphicon-trash');
 $('.actionBtn').removeClass('btn-success');
 $('.actionBtn').addClass('btn-danger');
 $('.actionBtn').addClass('delete');
-$('.modal-title').text('Delete Post');
+$('.modal-title').text('Delete');
 $('.id').text($(this).data('id'));
 $('.deleteContent').show();
 $('.form-horizontal').hide();
-$('.title').html($(this).data('title'));
+// $('.title').html($(this).data('title'));
 $('#myModal').modal('show');
 });
 
 $('.modal-footer').on('click', '.delete', function(){
   $.ajax({
     type: 'POST',
-    url: 'deletePost',
+    url: '/income/del_income',
     data: {
       '_token': $('input[name=_token]').val(),
       'id': $('.id').text()
     },
     success: function(data){
-       $('.post' + $('.id').text()).remove();
+       $('.income' + $('.id').text()).remove();
     }
   });
 });
