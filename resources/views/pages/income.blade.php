@@ -126,6 +126,7 @@
           @csrf
 	      <div class="modal-body">
 	      		<input type="hidden" name="id" id="cat_id" value="">
+            	<input type="hidden" name="old_biaya" id="old_biaya" value="">
 
             <div class="form-group">
               <label for="nama">Nama Pemasukan</label>
@@ -233,6 +234,7 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #biaya').val(biaya);
     modal.find('.modal-body #tgl').val(tgl);
     modal.find('.modal-body #cat_id').val(cat_id);
+    modal.find('.modal-body #old_biaya').val(biaya);
 })
 
 

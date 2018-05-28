@@ -114,9 +114,26 @@ class MainController extends Controller
 
     public function edit_income(request $request){
       $id =$request->id;
-
+      $wallet = wallet::find(Auth::user()->id);
       //$post=Post::where('id', $id)->first();
+      if($request->old_biaya > $request->biaya){
+        $save_wallet = $request->old_biaya - $request->biaya;
+        $hasil =$wallet['uang'] - $save_wallet;
+        $data = [
+          'uang' => $hasil
+        ];
 
+        $wallet ->update($data);
+      }
+      else{
+        $save_wallet = $request->biaya - $request->old_biaya;
+        $hasil =$wallet['uang'] + $save_wallet;
+        $data = [
+          'uang' => $hasil
+        ];
+
+        $wallet ->update($data);
+      }
 
       $income = income::find($id);
       $data =[
@@ -127,7 +144,7 @@ class MainController extends Controller
       ];
       $income->update($data);
 
-        $wallet = wallet::find(Auth::user()->id);
+
       $incomes =income::where('id_user',Auth::user()->id)->get();
       // return view('pages.income',compact('wallet','incomes'));
       $request->session()->flash('message.level', 'success');
@@ -199,7 +216,7 @@ class MainController extends Controller
 
       ];
       $wallet->update($data);
-      $exoense = Expense::find ($request->id)->delete();
+      $expense = Expense::find ($request->id)->delete();
       $expenses =Expense::where('id_user',Auth::user()->id)->get();
 
       // return view('pages.expense',compact('wallet','expenses'));
@@ -212,7 +229,27 @@ class MainController extends Controller
       $id =$request->id;
 
       //$post=Post::where('id', $id)->first();
+      $wallet = wallet::find(Auth::user()->id);
+      //$post=Post::where('id', $id)->first();
+      if($request->old_biaya > $request->biaya){
+        $save_wallet = $request->old_biaya - $request->biaya;
+        $hasil =$wallet['uang'] + $save_wallet;
 
+        $data = [
+          'uang' => $hasil
+        ];
+
+        $wallet ->update($data);
+      }
+      else{
+        $save_wallet = $request->biaya - $request->old_biaya;
+        $hasil =$wallet['uang'] - $save_wallet;
+        $data = [
+          'uang' => $hasil
+        ];
+
+        $wallet ->update($data);
+      }
 
       $expense = expense::find($id);
       $data =[
@@ -223,8 +260,8 @@ class MainController extends Controller
       ];
       $expense->update($data);
 
-        $wallet = wallet::find(Auth::user()->id);
-      $expenses =expense::where('id_user',Auth::user()->id)->get();
+
+      // $expenses =expense::where('id_user',Auth::user()->id)->get();
       // return view('pages.expense',compact('wallet','expenses'));
       $request->session()->flash('message.level', 'success');
       $request->session()->flash('message.content', 'Edit Success!');
