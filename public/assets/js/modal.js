@@ -88,7 +88,7 @@ $('.actionBtn').removeClass('btn-success');
 $('.actionBtn').addClass('btn-danger');
 $('.actionBtn').addClass('delete');
 $('.modal-title').text('Delete');
-$('.id').text($(this).data('id'));
+// $('.id').text($(this).data('id'));
 $('.deleteContent').show();
 $('.form-horizontal').hide();
 // $('.title').html($(this).data('title'));
@@ -103,7 +103,9 @@ $('.modal-footer').on('click', '.delete', function(){
       '_token': $('input[name=_token]').val(),
       'id': $('.id').text()
     },
+
     success: function(data){
+
        $('.income' + $('.id').text()).remove();
     }
   });

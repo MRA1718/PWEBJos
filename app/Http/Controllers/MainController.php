@@ -81,38 +81,56 @@ class MainController extends Controller
           $income->tgl_pemasukan = $request->tgl;
           $income->save();
           $incomes =income::where('id_user',Auth::user()->id)->get();
-         return view('pages.income',compact('wallet','incomes'));
-
+         // return view('pages.income',compact('wallet','incomes'));
+            return redirect('/income');
     }
 
-    public function editPost(request $request){
 
-      $post = Post::find ($request->id);
-      $post->title = $request->title;
-      $post->body = $request->body;
-      $post->save();
-      return response()->json($post);
-    }
 
 
     public function del_income(request $request){
-      $income = Income::find ($request->id)->delete();
-      $id_wallet=Wallet::where('id_user',Auth::user()->id)->first();
-      $id_income=Income::where('id',$request->id);
-      $hasil=$id['uang'] - $id_income['biaya_pemasukan'];
-      // return view('pages.income');
 
+
+      $id_wallet=Wallet::where('id_user',Auth::user()->id)->first();
+      $id_income=Income::where('id',$request->id)->first();
+      $hasil=$id_wallet['uang'] - $id_income['biaya_pemasukan'];
+
+      // return view('pages.income');
+        $wallet = wallet::find(Auth::user()->id);
       $data =[
         'uang' => $hasil
 
       ];
       $wallet->update($data);
+      $income = Income::find ($request->id)->delete();
+      $incomes =income::where('id_user',Auth::user()->id)->get();
+
+         return redirect('/income');
+    }
+
+    public function edit_income(request $request){
+      $id =$request->id;
+
+      //$post=Post::where('id', $id)->first();
 
 
+      $income = income::find($id);
+      $data =[
+        'nama_pemasukan' => $request->nama,
+        'biaya_pemasukan' =>$request->biaya,
+        'tgl_pemasukan' =>$request->tgl,
 
-      // return response()->json($income);
+      ];
+      $income->update($data);
+
+        $wallet = wallet::find(Auth::user()->id);
+      $incomes =income::where('id_user',Auth::user()->id)->get();
+      // return view('pages.income',compact('wallet','incomes'));
+         return redirect('/income');
 
     }
+
+
 
     public function expense()
     {
@@ -147,9 +165,51 @@ class MainController extends Controller
           $expense->tgl_pengeluaran = $request->tgl;
           $expense->save();
           $expenses =expense::where('id_user',Auth::user()->id)->get();
-         return view('pages.expense',compact('wallet','expenses'));
+         // return view('pages.expense',compact('wallet','expenses'));
+            return redirect('/expense')->with('alert', 'deleteSuccess');
 
     }
 
+    public function del_expense(request $request){
+
+
+      $id_wallet=Wallet::where('id_user',Auth::user()->id)->first();
+      $id_expense=Expense::where('id',$request->id)->first();
+      $hasil=$id_wallet['uang'] + $id_expense['biaya_pengeluaran'];
+
+      // return view('pages.income');
+        $wallet = wallet::find(Auth::user()->id);
+      $data =[
+        'uang' => $hasil
+
+      ];
+      $wallet->update($data);
+      $exoense = Expense::find ($request->id)->delete();
+      $expenses =Expense::where('id_user',Auth::user()->id)->get();
+
+      // return view('pages.expense',compact('wallet','expenses'));
+       return redirect('/expense')->with('alert', 'deleteSuccess');
+    }
+
+    public function edit_expense(request $request){
+      $id =$request->id;
+
+      //$post=Post::where('id', $id)->first();
+
+
+      $expense = expense::find($id);
+      $data =[
+        'nama_pengeluaran' => $request->nama,
+        'biaya_pengeluaran' =>$request->biaya,
+        'tgl_pengeluaran' =>$request->tgl,
+
+      ];
+      $expense->update($data);
+
+        $wallet = wallet::find(Auth::user()->id);
+      $expenses =expense::where('id_user',Auth::user()->id)->get();
+      // return view('pages.expense',compact('wallet','expenses'));
+         return redirect('/expense')->with('alert', 'deleteSuccess');
+    }
 
 }

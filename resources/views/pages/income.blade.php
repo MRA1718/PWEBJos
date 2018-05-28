@@ -16,7 +16,7 @@
 
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-table"></i> Data Table Example</div>
+        <i class="fa fa-table"></i>Tabel Pemasukan</div>
       <div class="card-body">
         <div class="table table-responsive">
     <table class="table table-bordered" id="table">
@@ -41,12 +41,15 @@
           <td>{{ $value->tgl_pemasukan }}</td>
           <td>
             <center>
-            <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="" data-title="" data-body="">
+            {{-- <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="" data-title="" data-body="">
               <i class="fa fa-pencil"></i>
-            </a>
-            <a href="#" class="delete-modal btn btn-danger btn-sm" data-id="{{$value->id}}" data-title="" data-body="">
-            <i class="fa fa-trash-o"></i>
-            </a>
+            </a> --}}
+            {{-- <a  href="#" class="delete-modal btn btn-danger btn-sm" data-id="{{$value->id}}" >
+            <i class="fa fa-trash-o"></i> --}}
+            		<button class="btn btn-info" data-mynama="{{$value->nama_pemasukan}}" data-mytgl="{{$value->tgl_pemasukan}}" data-mybiaya={{$value->biaya_pemasukan}} data-catid={{$value->id}} data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i></button>
+            	<button class="btn btn-danger" data-catid={{$value->id}} data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i></button>
+        
+
           </center>
           </td>
         </tr>
@@ -107,60 +110,72 @@
 </div></div>
 
 {{-- Modal Form Edit and Delete Post --}}
-<div id="myModal"class="modal fade" role="dialog">
-  <div class="modal-dialog">
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit Category</h4>
       </div>
-      <div class="modal-body">
-        <form class="form-horizontal" role="modal">
-          <div class="form-group">
-            <label class="control-label col-sm-2"for="id">ID</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="fid" disabled>
+      <form action="/income/edit_income" method="post">
+          @csrf
+	      <div class="modal-body">
+	      		<input type="hidden" name="id" id="cat_id" value="">
+
+            <div class="form-group">
+              <label for="nama">Nama Pemasukan</label>
+              <input type="text" class="form-control" name="nama" id="nama">
             </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2"for="title">Title</label>
-            <div class="col-sm-10">
-            <input type="name" class="form-control" id="t">
+
+            <div class="form-group">
+              <label for="biaya">Biaya Pemasukan</label>
+              <input type="number" name="biaya" id="biaya"  class="form-control">
             </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2"for="body">Body</label>
-            <div class="col-sm-10">
-            <textarea type="name" class="form-control" id="b"></textarea>
+
+            <div class="form-group">
+              <label for="tgl">Tanggal Pemasukan</label>
+              <input type="date" class="form-control" name="tgl" id="tgl">
             </div>
-          </div>
-        </form>
-                {{-- Form Delete Post --}}
-        <div class="deleteContent">
-          Are You sure want to delete <span class="title"></span>?
-          <span class="hidden id"></span>
-        </div>
-      </div>
-      <div class="modal-footer">
-        {{-- <form action="/income/del_income">
-          <input type="hidden" name="id" value="{{$value->id}}">
-          <button class="btn btn-danger" type="submit" >
-            Delete
-          </button>
 
 
-        </form> --}}
-        <button type="button" class="btn actionBtn" data-dismiss="modal">
-         <span id="footer_action_button" class="glyphicon"></span>
-       </button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal">
-          <span class="glyphicon glyphicon"></span>close
-        </button>
-      </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save Changes</button>
+	      </div>
+      </form>
     </div>
   </div>
 </div>
-      
+                {{-- Form Delete Post --}}
+                <div class="modal modal-danger fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title text-center" id="myModalLabel">Delete Confirmation</h4>
+                      </div>
+                      <form action="/income/del_income" method="post">
+                          @csrf
+                      		{{-- {{method_field('delete')}}
+                      		{{csrf_field()}} --}}
+                	      <div class="modal-body">
+                				<p class="text-center">
+                					Are you sure you want to delete this?
+                				</p>
+                	      		<input type="hidden" name="id" id="cat_id" value=" ">
+
+                	      </div>
+                	      <div class="modal-footer">
+                	        <button type="button" class="btn btn-success" data-dismiss="modal">No, Cancel</button>
+                	        <button type="submit" class="btn btn-warning">Yes, Delete</button>
+                	      </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+
 @endsection
 
 @section('add_js')
@@ -187,4 +202,36 @@
     $('#table').DataTable();
 } );
  </script>
+ <script src="{{asset('js/app.js')}}"></script>
+
+ <script>
+ $('#delete').on('show.bs.modal', function (event) {
+
+     var button = $(event.relatedTarget)
+
+     var cat_id = button.data('catid')
+     var modal = $(this)
+
+     modal.find('.modal-body #cat_id').val(cat_id);
+})
+
+$('#edit').on('show.bs.modal', function (event) {
+
+    var button = $(event.relatedTarget)
+    var nama = button.data('mynama')
+    var tgl = button.data('mytgl')
+    var biaya = button.data('mybiaya')
+    var cat_id = button.data('catid')
+    var modal = $(this)
+
+    modal.find('.modal-body #nama').val(nama);
+    modal.find('.modal-body #biaya').val(biaya);
+    modal.find('.modal-body #tgl').val(tgl);
+    modal.find('.modal-body #cat_id').val(cat_id);
+})
+
+
+</script>
+
+
 @endsection
