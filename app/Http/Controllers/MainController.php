@@ -82,6 +82,9 @@ class MainController extends Controller
           $income->save();
           $incomes =income::where('id_user',Auth::user()->id)->get();
          // return view('pages.income',compact('wallet','incomes'));
+
+         $request->session()->flash('message.level', 'success');
+         $request->session()->flash('message.content', 'Add Pemasukan Success!');
             return redirect('/income');
     }
 
@@ -104,7 +107,8 @@ class MainController extends Controller
       $wallet->update($data);
       $income = Income::find ($request->id)->delete();
       $incomes =income::where('id_user',Auth::user()->id)->get();
-
+      $request->session()->flash('message.level', 'success');
+      $request->session()->flash('message.content', 'Delete Success!');
          return redirect('/income');
     }
 
@@ -126,6 +130,8 @@ class MainController extends Controller
         $wallet = wallet::find(Auth::user()->id);
       $incomes =income::where('id_user',Auth::user()->id)->get();
       // return view('pages.income',compact('wallet','incomes'));
+      $request->session()->flash('message.level', 'success');
+      $request->session()->flash('message.content', 'Edit Success!');
          return redirect('/income');
 
     }
@@ -147,6 +153,13 @@ class MainController extends Controller
 
           $id=wallet::where('id_user',Auth::user()->id)->first();
 
+          if($id['uang'] < $request->jmlh ){
+            $request->session()->flash('message.level', 'danger');
+            $request->session()->flash('message.content', 'Jumlah Pengeluaran lebih dari uang di dompetmu :D!');
+            return redirect('/expense');
+
+          }
+
           $hasil=$id['uang'] - $request->jmlh;
 
           // $id =$request->input('post_id');
@@ -166,7 +179,9 @@ class MainController extends Controller
           $expense->save();
           $expenses =expense::where('id_user',Auth::user()->id)->get();
          // return view('pages.expense',compact('wallet','expenses'));
-            return redirect('/expense')->with('alert', 'deleteSuccess');
+            $request->session()->flash('message.level', 'success');
+            $request->session()->flash('message.content', 'Add Pengeluaran Success!');
+            return redirect('/expense');
 
     }
 
@@ -188,6 +203,8 @@ class MainController extends Controller
       $expenses =Expense::where('id_user',Auth::user()->id)->get();
 
       // return view('pages.expense',compact('wallet','expenses'));
+      $request->session()->flash('message.level', 'success');
+      $request->session()->flash('message.content', 'Delete Success!');
        return redirect('/expense')->with('alert', 'deleteSuccess');
     }
 
@@ -209,7 +226,9 @@ class MainController extends Controller
         $wallet = wallet::find(Auth::user()->id);
       $expenses =expense::where('id_user',Auth::user()->id)->get();
       // return view('pages.expense',compact('wallet','expenses'));
-         return redirect('/expense')->with('alert', 'deleteSuccess');
+      $request->session()->flash('message.level', 'success');
+      $request->session()->flash('message.content', 'Edit Success!');
+         return redirect('/expense');
     }
 
 }

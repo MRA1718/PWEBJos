@@ -93,7 +93,7 @@
                                             <h1>WELCOME TO ARTHO</h1>
                                             <p>We help you manage your finance</p>
                                             <div class="home_btn">
-                                                <a href="" class="btn btn-primary">REGISTER HERE</a>
+                                                <a href="{{ route('register') }}" class="btn btn-primary">REGISTER HERE</a>
                                             </div>
 
                                         </div>

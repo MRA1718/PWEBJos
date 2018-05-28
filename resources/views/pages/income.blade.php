@@ -12,6 +12,11 @@
       <li class="breadcrumb-item active">Pemasukanmu</li>
     </ol>
     <h1> Uangmu = RP. <?php echo number_format($wallet['uang'],0,",","."); ?>  </h1>
+    @if(session()->has('message.level'))
+    <div class="alert alert-{{ session('message.level') }}">
+    {!! session('message.content') !!}
+    </div>
+@endif
 
 
     <div class="card mb-3">
@@ -48,7 +53,7 @@
             <i class="fa fa-trash-o"></i> --}}
             		<button class="btn btn-info" data-mynama="{{$value->nama_pemasukan}}" data-mytgl="{{$value->tgl_pemasukan}}" data-mybiaya={{$value->biaya_pemasukan}} data-catid={{$value->id}} data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i></button>
             	<button class="btn btn-danger" data-catid={{$value->id}} data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i></button>
-        
+
 
           </center>
           </td>

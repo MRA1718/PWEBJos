@@ -14,7 +14,11 @@
       <li class="breadcrumb-item active">Pengeluaranmu</li>
     </ol>
     <h2> Uangmu = RP.<?php echo number_format($wallet['uang'],0,",","."); ?>   </h2>
-
+    @if(session()->has('message.level'))
+    <div class="alert alert-{{ session('message.level') }}">
+    {!! session('message.content') !!}
+    </div>
+@endif
 
     <div class="card mb-3">
       <div class="card-header">
@@ -171,7 +175,7 @@
                   </div>
                 </div>
 
-            
+
 @endsection
 
 @section('add_js')
